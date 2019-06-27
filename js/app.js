@@ -121,10 +121,13 @@ const game = {
     }
     },
   chooseCard: function(player) {
-    const choice = prompt("Choose a card from your hand by typing a number. For example, if you have three cards in your hand, you could type 1, 2, or 3.");
-    if (choice > player.hand.length && typeof choice !== "number") {
+    let choice = prompt("Choose a card from your hand by typing a number. For example, if you have three cards in your hand, you could type 1, 2, or 3.");
+    console.log(choice, "<----choice");
+    console.log(choice > player.hand.length, "<----choice > player.hand.length");
+    console.log(isNaN(Number(choice)), "isNaN(Number(choice))");
+    if (choice > player.hand.length || isNaN(Number(choice))) {
       console.log("Incorrect entry, try again.")
-      this.chooseCard(player);
+      return this.chooseCard(player);
     } else {
       const cardArray = player.hand.splice(choice-1, 1);
       const card = cardArray[0];
@@ -165,8 +168,8 @@ const game = {
       if (!this.done) {
         this.displayHand(player1),
         this.displayHand(player2);
-        const card1 = this.chooseCard(player1);
-        const card2 = this.pickRandomCard(player2.hand);
+        let card1 = this.chooseCard(player1);
+        let card2 = this.pickRandomCard(player2.hand);
         this.battle(card1, card2);
         this.checkPoints(player2);
         this.checkPoints(player1);
